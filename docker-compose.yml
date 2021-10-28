@@ -11,6 +11,7 @@ services:
     ports:
       - "9870:9870"
       - "8088:8088"
+      - "19888:19888"
     volumes:
       - /home/renato/bigdata-docker/Hadoop/config/workers:/usr/local/hadoop/etc/hadoop/workers
 
