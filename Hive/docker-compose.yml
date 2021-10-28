@@ -1,0 +1,65 @@
+version: '3.7' 
+services:
+  
+  hive-server:
+    image: hive-image
+    container_name: hive-server
+    hostname: hive_server
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.20
+    entrypoint: /root/validate-db-init.sh
+    command: /usr/local/hive/bin/hive --service hiveserver2 &
+    ports:
+      - "10000:10000"
+      - "10002:10002"
+    environment:
+      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/hivemetastoredb"
+      SERVICE_PRECONDITION: "hive-metastore:9083"
+    depends_on:
+      - hive-metastore 
+    volumes:
+      - ./data/teste:/teste
+
+  hive-metastore:
+    image: hive-image
+    container_name: hive-metastore
+    hostname: hive-metastore
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.21
+    command: bash -c "sleep 1m && /usr/local/hive/bin/hive --service metastore"
+    environment:
+      SERVICE_PRECONDITION: "hive-metastore-postgresql:5432"  
+    env_file:
+      - ./config/hadoop-hive.env    
+    ports:
+      - "9083:9083"
+    depends_on:
+       - hive-metastore-postgresql
+    volumes:
+      - ./data/teste:/teste    
+
+  hive-metastore-postgresql:
+    image: postgres:11.5
+    hostname:  hive-metastore-postgresql
+    container_name:  hive-metastore-postgresql
+    environment:
+      POSTGRES_PASSWORD: new_password
+    expose:
+      - 5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.22
+
+networks:
+    hadoop:
+      external: true
+      driver: bridge         

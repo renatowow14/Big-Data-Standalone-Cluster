@@ -1,0 +1,21 @@
+version: '3.7' 
+services:
+  
+#https://github.com/mrwilson/docker-flume
+  
+  flume-server:
+    image: flume-image
+    container_name:  flume-server
+    hostname:  flume-server
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.30
+    volumes:
+      - ./config/flume.conf:/usr/local/flume/conf/flume.conf
+    environment:
+      FLUME_AGENT_NAME: "agent"
+        
+networks:
+    hadoop:
+      external: true
+      driver: bridge         

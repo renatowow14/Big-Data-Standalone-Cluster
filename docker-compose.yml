@@ -1,0 +1,130 @@
+version: '3.7' 
+services:
+
+  hadoop-master:
+    image: hadoop-image
+    container_name: hadoop-master
+    hostname: hadoop-master
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.3
+    ports:
+      - "9870:9870"
+      - "8088:8088"
+    volumes:
+      - /home/renato/bigdata-docker/Hadoop/config/workers:/usr/local/hadoop/etc/hadoop/workers
+
+  hadoop-slave1:
+    image: hadoop-image
+    container_name: hadoop-slave1
+    hostname: hadoop-slave1
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.4
+    ports:
+      - "9864:9864"
+    depends_on:
+      - hadoop-master
+    volumes:
+      - /home/renato/bigdata-docker/data/teste:/teste
+
+  hadoop-slave2:
+    image: hadoop-image
+    container_name: hadoop-slave2
+    hostname: hadoop-slave2
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.5
+    ports:
+      - "9865:9864"    
+    depends_on:
+      - hadoop-master 
+    volumes:
+      - /home/renato/bigdata-docker/data/teste:/teste
+
+  sqoop-server:
+    image: sqoop-image
+    container_name:  sqoop-server
+    hostname:  sqoop-server
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.25
+    volumes:
+      - /home/renato/bigdata-docker/data/teste:/teste
+   
+  flume-server:
+    image: flume-image
+    container_name:  flume-server
+    hostname:  flume-server
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.30
+    volumes:
+      - /home/renato/bigdata-docker/Flume/config/flume.conf:/usr/local/flume/conf/flume.conf
+      - /home/renato/bigdata-docker/data/teste:/root/teste
+    environment:
+      FLUME_AGENT_NAME: "agent"
+    entrypoint: /root/start-flume.sh  
+          
+  hive-server:
+    image: hive-image
+    container_name: hive-server
+    hostname: hive_server
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.20
+    entrypoint: /root/validate-db-init.sh
+    command: /usr/local/hive/bin/hive --service hiveserver2 &
+    ports:
+      - "10000:10000"
+      - "10002:10002"
+    environment:
+      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/hivemetastoredb"
+      SERVICE_PRECONDITION: "hive-metastore:9083"
+    depends_on:
+      - hive-metastore 
+    volumes:
+      - /home/renato/bigdata-docker/data/teste:/teste
+
+  hive-metastore:
+    image: hive-image
+    container_name: hive-metastore
+    hostname: hive-metastore
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.21
+    command: bash -c "sleep 1m && /usr/local/hive/bin/hive --service metastore"
+    environment:
+      SERVICE_PRECONDITION: "hive-metastore-postgresql:5432"  
+    #env_file:
+    #  - /home/renato/bigdata-docker/Hive/config/hadoop-hive.env    
+    ports:
+      - "9083:9083"
+    depends_on:
+       - hive-metastore-postgresql
+    volumes:
+      - /home/renato/bigdata-docker/data/teste:/teste    
+
+  hive-metastore-postgresql:
+    image: postgres:11.5
+    hostname:  hive-metastore-postgresql
+    container_name:  hive-metastore-postgresql
+    environment:
+      POSTGRES_PASSWORD: new_password
+    expose:
+      - 5432
+    volumes:
+      - /home/renato/bigdata-docker/Hive/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.22
+
+networks:
+    hadoop:
+      external: true
+      driver: bridge         

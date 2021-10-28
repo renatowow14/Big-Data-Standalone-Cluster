@@ -1,0 +1,13 @@
+---
+- name: Transfer and execute a script.
+  hosts: all
+  strategy: free
+  user: root
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+     - name: Transfer the script
+       copy: src=../initial.sh dest=/root mode=0777
+     - name: Execute the script
+       command: bash /root/initial.sh

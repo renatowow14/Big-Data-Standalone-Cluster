@@ -1,0 +1,17 @@
+version: '3.7' 
+services:
+  
+  sqoop-server:
+    image: sqoop-image
+    container_name:  sqoop-server
+    hostname:  sqoop-server
+    networks:
+      hadoop:
+        ipv4_address: 172.25.0.25
+    volumes:
+      - ./data/teste:/teste
+
+networks:
+    hadoop:
+      external: true
+      driver: bridge         

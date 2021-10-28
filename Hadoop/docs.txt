@@ -1,0 +1,22 @@
+hadoop fs -ls / 
+
+#Run hive in debug mode
+hive -hiveconf hive.root.logger=DEBUG,console
+
+sqoop list-tables --connect jdbc:postgresql://hive-metastore-postgresql/hivemetastoredb --username postgres --password new_password
+
+sqoop import --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password --table orders_sale -m 1 --target-dir /pos/orders/sales
+
+sqoop import --query "select * from orders_sale where ship_mode='Regular Air' AND
+\$CONDITIONS" --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password  -m 1 --target-dir /pos/orders/orders_sale_query
+
+sqoop import --columns "row_id,sales" --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password --table orders_sale -m 1 --target-dir /pos/orders/orders_sale_columns
+
+sqoop import --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password --table orders_sale -m 4 --split-by row_id --target-dir /pos/orders/orders_sale_paralle
+
+
+sqoop import-all-tables --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password -m 1 --warehouse-dir /pos/orders-full
+
+sqoop export --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password  --table orders_sale_copy --export-dir /pos/orders/sales
+
+sqoop codegen --connect jdbc:postgresql://172.25.0.6/postgres --username postgres --password new_password --table orders_sale
