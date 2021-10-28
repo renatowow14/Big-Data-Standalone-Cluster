@@ -5,6 +5,7 @@ services:
     image: hadoop-image
     container_name: hadoop-master
     hostname: hadoop-master
+    restart: always
     networks:
       hadoop:
         ipv4_address: 172.25.0.3
@@ -19,6 +20,7 @@ services:
     image: hadoop-image
     container_name: hadoop-slave1
     hostname: hadoop-slave1
+    restart: always
     networks:
       hadoop:
         ipv4_address: 172.25.0.4
@@ -33,6 +35,7 @@ services:
     image: hadoop-image
     container_name: hadoop-slave2
     hostname: hadoop-slave2
+    restart: always
     networks:
       hadoop:
         ipv4_address: 172.25.0.5
@@ -47,6 +50,7 @@ services:
     image: sqoop-image
     container_name:  sqoop-server
     hostname:  sqoop-server
+    restart: always
     networks:
       hadoop:
         ipv4_address: 172.25.0.25
@@ -71,6 +75,7 @@ services:
     image: hive-image
     container_name: hive-server
     hostname: hive_server
+    restart: always
     networks:
       hadoop:
         ipv4_address: 172.25.0.20
@@ -91,6 +96,7 @@ services:
     image: hive-image
     container_name: hive-metastore
     hostname: hive-metastore
+    restart: always
     networks:
       hadoop:
         ipv4_address: 172.25.0.21
@@ -109,6 +115,7 @@ services:
   hive-metastore-postgresql:
     image: postgres:11.5
     hostname:  hive-metastore-postgresql
+    restart: always
     container_name:  hive-metastore-postgresql
     environment:
       POSTGRES_PASSWORD: new_password
