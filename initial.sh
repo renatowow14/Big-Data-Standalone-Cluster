@@ -52,9 +52,6 @@ if [[ $(which git) ]]; then
     apt-get update && apt-get -y install git
 fi
 
-cd /root
-git clone https://github.com/renatowow14/Big-Data-Standalone-Cluster.git
-
 if [ -d "$HOME/Big-Data-Standalone-Cluster" ] 
 then
     echo "Directory /path/to/dir exists, GIT-PULL" 
@@ -63,7 +60,7 @@ then
 
 else
     echo "Error: Directory /path/to/dir does not exists, GIT-CLONE"
-    cd $HOME/Big-Data-Standalone-Cluster
+    cd $HOME
     git clone https://github.com/renatowow14/Big-Data-Standalone-Cluster.git
 fi
 
