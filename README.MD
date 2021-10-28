@@ -1,4 +1,4 @@
-# Apache Hadoop 3.3.1 + Apache Sqoop 1.4.7 + Apache Hive 3.1.2 + Apache Flume 1.6
+# Apache Hadoop 3.3.1 + Apache Sqoop 1.4.7 + Apache Hive 3.1.2 + Apache Flume 1.9.0
 
 ### How to run
 0. Run all commands with the sudo user
