@@ -4,18 +4,9 @@
 0. Run all commands with the sudo user
 1. Run ```initial.sh```
 2. Run ```run-wordcount.sh``` to run Word Count job
-
-## Run Portainer 
-
-1. Run docker-compose.yml on folder Portainer/
-2. cd ```Portainer/ && docker-compose up -d```
-3. Acess portainer on localhost:9000
-4. Have an easy management and visual of your containers
-
-## Stop Project
-
-1. Run ```./stop-cluster.sh``` and specify the value of how many slaves you want to delete
-2. ```./stop-cluster.sh 3``` #Delete 3 slaves and master
+3. Change the path where the github project is downloaded in the ```docker-compose.yml`` file to the one on your local machine 
+4. Create Stack on Portainer ```docker-compose.yml```
+5. Enjoy!
 
 ## Run Project on Remote Server
 
@@ -24,41 +15,6 @@
 3. Set your hosts in hosts file in ansible folder
 4. Run ```./install-ssh-keys.sh hosts``` and enter the hosts file in front of the script to set the SSH key with your remote host
 5. Run ```ansible-playbook playbook.yml```
-
-## Resize Cluster Slaves
-
-1. Run ```./resize-cluster.sh``` and inform number of slaves you nedd up on server
-2. Run ```./resize-cluster.sh 4``` #Up 4 slaves on cluster
-
-
-### Test Apache Sqoop and Apache Hive and Flume
-
-1. Test sqoop:
-
-```docker exec -it hadoop-master bash ```
-
-``` sqoop list-tables --connect jdbc:postgresql://172.25.0.6/hivemetastoredb --username postgres --password new_password ```
-
-2. Test Hive
-
- ```docker exec -it hadoop-master bash ```
-
- ```hive ```
-
- ```show databases; ```
-
-3. Teste Flume
-
-```docker exec -it flume-hdfs bash ```
-
-```cd /root/teste```
-
-```touch "teste" > teste.txt```
-
-```docker exec -it hadoop-master bash ```
-
-```dhadoop fs -ls /flume```
-
 
 ### Description
 
