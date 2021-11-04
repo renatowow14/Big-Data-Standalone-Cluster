@@ -133,7 +133,7 @@ if [[ $(docker images | grep "postgres:11.5") ]]; then
     docker pull postgres:11.5
 fi
 
-cd $HOME/Portainer
+cd $HOME/data/Portainer
 docker-compose up -d
 
 
