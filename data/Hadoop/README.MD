@@ -13,6 +13,11 @@
 3. Acess portainer on localhost:9000
 4. Have an easy management and visual of your containers
 
+## Resize Cluster Slaves
+
+1. Run ```./resize-cluster.sh``` and inform number of slaves you nedd up on server
+2. Run ```./resize-cluster.sh 4``` #Up 4 slaves on cluster
+
 ## Stop Project
 
 1. Run ```./stop-cluster.sh``` and specify the value of how many slaves you want to delete
