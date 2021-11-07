@@ -3,7 +3,7 @@
 ### How to run
 0. Run all commands with the sudo user
 1. Run ``` docker build -t hadoop-image .```
-2. Run ```docker exec -it hadoop-image bash ``` to run Word Count job
+2. Run ```docker exec -it hadoop-image bash ``` to run log into the hadoop container
 3. Run ```run-wordcount.sh``` to run Word Count job
 
 ## Run Portainer 
