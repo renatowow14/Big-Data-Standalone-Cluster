@@ -4,11 +4,11 @@
 0. Run all commands with the sudo user
 1. Run ```initial.sh```
 2. Change the path where the github project is downloaded in the ``docker-compose.yml`` file to the one on your local machine 
-3. Create Stack on Portainer ```docker-compose.yml```
-4. Run ```start-project.sh``` to start hadoop-cluster and log into hadoop-master
-4. Run ```run-wordcount.sh``` to run Word Count job
-5. Access Portainer-Web at http://localhost:9000
-6. Enjoy!
+3. Access Portainer-Web at http://localhost:9000
+4. Create Stack on Portainer ```docker-compose.yml``` and start the stack
+5. Run ```start-project.sh``` 
+6. Run ```run-wordcount.sh``` to run Word Count job
+7. Enjoy!
 
 ## Run Project on Remote Server:
 
