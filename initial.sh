@@ -133,5 +133,3 @@ docker-compose up -d
 docker-compose -f Portainer/docker-compose.yml up -d
 
 
-
-
