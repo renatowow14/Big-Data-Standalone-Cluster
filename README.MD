@@ -5,7 +5,7 @@
 1. Run ```initial.sh```
 2. Change the path where the github project is downloaded in the ``docker-compose.yml`` file to the one on your local machine 
 3. Access Portainer-Web at http://localhost:9000
-4. Create Stack on Portainer ```docker-compose.yml``` and start the stack
+4. Create Stack on Portainer ```docker-compose.yml``` and start the stack: https://docs.portainer.io/v/ce-2.9/user/docker/stacks/add
 5. Run ```start-project.sh``` 
 6. Run ```run-wordcount.sh``` to run Word Count job
 7. Enjoy!
