@@ -23,6 +23,16 @@
 * This cluster consists of a master node and two slaves by default
 * You might have to change resource configs. Current config uses 4 cores and 4 Gb RAM
 
+### Test Apache-Sqoop by playing data on HDFS:
+
+1. Enter directory /data/big-data-storage
+2. Create a text file or any other
+3. Access HDFS http://localhost:9870
+4. Navigate to Browser the file system
+5. Open the /flume folder
+6. See if the file you just created on the host machine is found
+7. Enjoy!
+
 ### Web UI:
   If you want to see the web UI, you have to access the following address/port:
 * ```http://localhost:9870``` HDFS Web UI
