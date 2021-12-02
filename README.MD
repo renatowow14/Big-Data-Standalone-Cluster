@@ -29,4 +29,4 @@
 * ```http://localhost:8088``` YARN Web UI
 * ```http://localhost:19888``` MapReduce JobHistory Web UI
 * ```http://localhost:10002``` HiveServer2 Web UI
-* ```http://localhost:9000``` Portainer-Web 
+* ```http://localhost:9000``` Portainer Web UI
