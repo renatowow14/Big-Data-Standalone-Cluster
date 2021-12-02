@@ -129,10 +129,10 @@ fi
 
 if [[ $(docker images | grep "portainer/portainer-ce") ]]; then
     clear
-    echo "Imagem ja construida!"
+    echo "Imagem ja baixada!"
   else
   	clear
-    echo "Imagem nao construida no Sistema!"
+    echo "Imagem nao baixada no Sistema!"
     docker-compose -f data/Portainer/docker-compose.yml up -d
 fi
 
