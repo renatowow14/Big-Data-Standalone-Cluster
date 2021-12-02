@@ -14,7 +14,7 @@ services:
       - "8088:8088"
       - "19888:19888"
     volumes:
-      - /home/renato/bigdata-docker/data/Hadoop/config/workers:/usr/local/hadoop/etc/hadoop/workers
+      - ./data/Hadoop/config/workers:/usr/local/hadoop/etc/hadoop/workers
 
   hadoop-slave1:
     image: hadoop-image
@@ -28,8 +28,6 @@ services:
       - "9864:9864"
     depends_on:
       - hadoop-master
-    volumes:
-      - /home/renato/bigdata-docker/data/folder/save_data:/teste
 
   hadoop-slave2:
     image: hadoop-image
@@ -43,8 +41,6 @@ services:
       - "9865:9864"    
     depends_on:
       - hadoop-master 
-    volumes:
-      - /home/renato/bigdata-docker/data/folder/save_data:/teste
 
   sqoop-server:
     image: sqoop-image
@@ -55,7 +51,7 @@ services:
       hadoop:
         ipv4_address: 172.25.0.25
     volumes:
-      - /home/renato/bigdata-docker/data/folder/save_data:/teste
+      - /data/big-data-storage:/teste
    
   flume-server:
     image: flume-image
@@ -65,8 +61,8 @@ services:
       hadoop:
         ipv4_address: 172.25.0.30
     volumes:
-      - /home/renato/bigdata-docker/data/Flume/config/flume.conf:/usr/local/flume/conf/flume.conf
-      - /home/renato/bigdata-docker/data/folder/save_data:/root/teste
+      - ./data/Flume/config/flume.conf:/usr/local/flume/conf/flume.conf
+      - /data/big-data-storage:/root/teste
     environment:
       FLUME_AGENT_NAME: "agent"
     entrypoint: /root/start-flume.sh  
@@ -89,8 +85,6 @@ services:
       SERVICE_PRECONDITION: "hive-metastore:9083"
     depends_on:
       - hive-metastore 
-    volumes:
-      - /home/renato/bigdata-docker/data/folder/save_data:/teste
 
   hive-metastore:
     image: hive-image
@@ -103,14 +97,12 @@ services:
     command: bash -c "sleep 1m && /usr/local/hive/bin/hive --service metastore"
     environment:
       SERVICE_PRECONDITION: "hive-metastore-postgresql:5432"  
-    #env_file:
-    #  - /home/renato/bigdata-docker/data/Hive/config/hadoop-hive.env    
+    env_file:
+     - ./data/Hive/config/hadoop-hive.env    
     ports:
       - "9083:9083"
     depends_on:
-       - hive-metastore-postgresql
-    volumes:
-      - /home/renato/bigdata-docker/data/folder/save_data:/teste    
+       - hive-metastore-postgresql 
 
   hive-metastore-postgresql:
     image: postgres:11.5
@@ -122,7 +114,7 @@ services:
     expose:
       - 5432
     volumes:
-      - /home/renato/bigdata-docker/data/Hive/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data/Hive/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -131,7 +123,6 @@ services:
     networks:
       hadoop:
         ipv4_address: 172.25.0.22
-
 networks:
     hadoop:
       external: true

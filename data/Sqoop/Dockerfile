@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-MAINTAINER Renato Gomes Silverio <renatogomesilverio@gmail>
+LABEL Renato Gomes Silverio <renatogomesilverio@gmail>
 
 WORKDIR /root
 
