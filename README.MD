@@ -23,7 +23,7 @@
 * This cluster consists of a master node and two slaves by default
 * You might have to change resource configs. Current config uses 4 cores and 4 Gb RAM
 
-### Test Apache-Sqoop by playing data on HDFS:
+### Testing Data Replication for HDFS with Apache-Sqoop:
 
 1. Enter directory /data/big-data-storage
 2. Create a text file or any other
