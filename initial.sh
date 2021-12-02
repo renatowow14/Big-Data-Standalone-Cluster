@@ -1,15 +1,9 @@
 #!/bin/bash
 
 #[PRE-REQUISITOS: git, docker, docker-compose, curl, wget]
-
-#"Verificando se o docker esta instalado no sistema!"
-
-echo -e -n "Digite a home do projeto: "
-read HOME
-
-#HOME=/home/renato/bigdata-docker
-
 apt-get update && apt-get -y install htop curl wget >> /dev/null
+
+#Verificando se o docker e docker-compose esta instalado no sistema!"
 
 if [[ $(which docker) && $(docker --version) ]]; then
     clear
@@ -52,15 +46,15 @@ if [[ $(which git) ]]; then
     apt-get update && apt-get -y install git
 fi
 
-if [ -d "$HOME/Big-Data-Standalone-Cluster" ] 
+if [ -d "data/Big-Data-Standalone-Cluster" ] 
 then
     echo "Directory /path/to/dir exists, GIT-PULL" 
-    cd $HOME/Big-Data-Standalone-Cluster
+    cd data/Big-Data-Standalone-Cluster
     git pull
 
 else
     echo "Error: Directory /path/to/dir does not exists, GIT-CLONE"
-    cd $HOME
+    cd data
     git clone https://github.com/renatowow14/Big-Data-Standalone-Cluster.git
 fi
 
@@ -87,7 +81,7 @@ if [[ $(docker images | grep "hadoop-image") ]]; then
   else
   	clear
     echo "Imagem nao construida no Sistema!"
-    cd $HOME/Hadoop && docker build -t hadoop-image .
+    cd data/Hadoop && docker build -t hadoop-image .
 
 
 fi
@@ -98,7 +92,7 @@ if [[ $(docker images | grep "flume-image") ]]; then
   else
   	clear
     echo "Imagem nao construida no Sistema!"
-    cd $HOME/Flume && docker build -t flume-image .
+    cd data/Flume && docker build -t flume-image .
     
 
 fi
@@ -109,7 +103,7 @@ if [[ $(docker images | grep "sqoop-image") ]]; then
   else
   	clear
     echo "Imagem nao construida no Sistema!"
-    cd $HOME/Sqoop && docker build -t sqoop-image .
+    cd data/Sqoop && docker build -t sqoop-image .
     
 
 fi
@@ -120,7 +114,7 @@ if [[ $(docker images | grep "hive-image") ]]; then
   else
   	clear
     echo "Imagem nao construida no Sistema!"
-    cd $HOME/Hive && docker build -t hive-image .
+    cd data/Hive && docker build -t hive-image .
 
 fi
 
@@ -133,7 +127,16 @@ if [[ $(docker images | grep "postgres:11.5") ]]; then
     docker pull postgres:11.5
 fi
 
-cd $HOME/data/Portainer
+if [[ $(docker images | grep "portainer/portainer-ce") ]]; then
+    clear
+    echo "Imagem ja construida!"
+  else
+  	clear
+    echo "Imagem nao construida no Sistema!"
+    docker-compose -f data/Portainer/docker-compose.yml up -d
+fi
+
+cd data/data/Portainer
 docker-compose up -d
 
 

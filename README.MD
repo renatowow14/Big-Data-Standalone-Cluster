@@ -7,6 +7,7 @@
 3. Create Stack on Portainer ```docker-compose.yml```
 4. Run ```start-project.sh``` to start hadoop-cluster and log into hadoop-master
 4. Run ```run-wordcount.sh``` to run Word Count job
+5. Access Portainer-Web at http://localhost:9000
 6. Enjoy!
 
 ## Run Project on Remote Server:
